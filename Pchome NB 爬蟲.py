@@ -13,8 +13,8 @@ name_re = r'^(.*?)\('
 spec_re = r'\((.*?)\)'
 
 dictionary = {'ASUS': 'https://24h.pchome.com.tw/region/DHAF', 
-              'Msi': 'https://24h.pchome.com.tw/region/DHAK', 
-              'hp': 'https://24h.pchome.com.tw/region/DHAG',
+              'MSI': 'https://24h.pchome.com.tw/region/DHAK', 
+              'HP': 'https://24h.pchome.com.tw/region/DHAG',
               'Lenovo': 'https://24h.pchome.com.tw/region/DHBF',
               'acer': 'https://24h.pchome.com.tw/region/DHAE',
               'GigaByte': 'https://24h.pchome.com.tw/region/DHAV',
