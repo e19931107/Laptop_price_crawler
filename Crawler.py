@@ -1,2 +1,3 @@
-from Website import Pchome
+from Website import Pchome, CoolPC
 Pchome.Pchome()
+CoolPC.CoolPC()

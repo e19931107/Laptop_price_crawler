@@ -38,5 +38,4 @@ def Pchome():
                 # 如果找到匹配，印出括號內的內容
                 if match_inner:
                     spec = match_inner.group(1)
-                
                     print(name,'/',spec,'/',price)
