@@ -1,4 +1,4 @@
-def pchome():
+def Pchome():
     from time import sleep
     from selenium import webdriver
     import time
@@ -39,4 +39,4 @@ def pchome():
                 if match_inner:
                     spec = match_inner.group(1)
                 
-                return name, spec, price
+                    print(name,'/',spec,'/',price)
