@@ -1,53 +1,21 @@
-from time import sleep
-from selenium import webdriver
-import time
-import re
-from selenium.webdriver.common.by import By
+import requests
+from bs4 import BeautifulSoup
 
-option = webdriver.ChromeOptions()
+brand_url = {'asus': 'https://m.momoshop.com.tw/category.momo?cn=4300100008&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'ROG': 'https://m.momoshop.com.tw/category.momo?cn=4300100673&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'acer': 'https://m.momoshop.com.tw/category.momo?cn=4300100003&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'Lenovo': 'https://m.momoshop.com.tw/category.momo?cn=4300100160&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'ThinkPad': 'https://m.momoshop.com.tw/category.momo?cn=4300100179&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'HP': 'https://m.momoshop.com.tw/category.momo?cn=4300100013&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'Surface': 'https://m.momoshop.com.tw/category.momo?cn=4300100759&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'MSI': 'https://m.momoshop.com.tw/category.momo?cn=4300100239&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'DELL': 'https://m.momoshop.com.tw/category.momo?cn=4300100202&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6',
+             'Gigabyte': 'https://m.momoshop.com.tw/category.momo?cn=4300100446&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6'}
 
-option.add_experimental_option('excludeSwitches', ['enable-automation'])
+url = 'https://m.momoshop.com.tw/category.momo?cn=4300100446&cateLevel=2&sourcePageType=4&imgSH=itemizedType&sortType=6'
 
-driver = webdriver.Chrome(options = option)
-driver.maximize_window()
-url = 'https://www.momoshop.com.tw/category/LgrpCategory.jsp?l_code=4300100000&mdiv=1099600000-bt_0_996_10-&ctype=B&sourcePageType=4'
-driver.get(url)
-driver.implicitly_wait(5)
+re = requests.get(url)
+momo = BeautifulSoup(re.text, "html.parser")
 
-n = 1
-while True:
-    try:
-        test = driver.find_element(By.XPATH, f'/html/body/div[1]/div[3]/div[2]/div[1]/div[1]/div/div[2]/div/div/div/ul/li[{n}]/a')
-        print(test.text)
-        if test:
-            url = test.get_attribute('href')
-            print(url)
-        #     driver.get(url)
-        #     driver.implicitly_wait(5)
-        #     m = 1
-            # try:
-            #     while True:
-            #         product = driver.find_element(By.XPATH, f'/html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[{m}]/a/div[2]')
-            #         price = driver.find_element(By.XPATH, f'/html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[{m}]/a/div[2]')
-            #         m += 1
-            # except:
-            #     continue
-
-        n += 1
-    except:
-        break
-
-
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[1]/a/div[2]/div/h3
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[2]/a/div[2]/div/h3
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[28]/a/div[2]/div/h3/text()
-
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[1]/a/div[2]/span[3]/b
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[10]/a/div[2]/span[3]/b
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[26]/a/div[2]/span[3]/b
-
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[4]/ul/li[1]/a/div[2]/div/h3
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[4]/ul/li[15]/a/div[2]/div/h3
-
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[1]/a/div[2]/div/h3
-# /html/body/div[1]/div[3]/div[5]/div[3]/div[3]/ul/li[6]/a/div[2]/div/h3
+all_momo= momo.select('li')
+print(all_momo)
