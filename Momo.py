@@ -30,7 +30,7 @@ def momo():
                 i += 1
             except:
                 break
-    
+
     import pandas as pd
 
     data = pd.DataFrame({'description':product_list, 'price_after': price_list})
@@ -41,6 +41,10 @@ def momo():
 
     # 使用 str.replace 刪除原始欄位中的字元
     data['description'] = data['description'].str.replace(r'【.+?】', '', regex=True)
+
+    data[['model_name', 'spec']] = data['description'].str.split('(', n=1, expand= True)
+    data['spec'] = data['spec'].str.replace(')', '')
+    data.drop(columns = 'description', inplace=True)
 
     return data
 
