@@ -7,7 +7,8 @@ def momo():
                 'MSI': '4300100239', 'DELL': '4300100202', 'Gigabyte': '4300100446'}
 
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
-
+    product_list = []
+    price_list = []
     for brand, code in brand_url.items():
         i = 1
         while True:
@@ -22,9 +23,24 @@ def momo():
                 product_price = momo.select('b[class="price"]')
                 if product_name and product_price:
                     for name, price in zip(product_name[:-1], product_price[:-1]):
-                        print(name.text,'/',price.text)
+                        product_list.append(name.text)
+                        price_list.append(price.text)
                 else:
                     break
                 i += 1
             except:
                 break
+    
+    import pandas as pd
+
+    data = pd.DataFrame({'description':product_list, 'price_after': price_list})
+
+    data['price_after'] = data['price_after'].str.replace(',', '')
+
+    data['brand'] = data['description'].str.extract(r'【(.+?)】')
+
+    # 使用 str.replace 刪除原始欄位中的字元
+    data['description'] = data['description'].str.replace(r'【.+?】', '', regex=True)
+
+    return data
+

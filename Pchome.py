@@ -21,10 +21,13 @@ def Pchome():
                 'GigaByte': 'https://24h.pchome.com.tw/region/DHAV',
                 'Dell': 'https://24h.pchome.com.tw/region/DHAI'}
 
+    brand_list = []
+    description_list = []
+    price_list = []
+
     for key, value in dictionary.items():
         driver.get(value)
         driver.implicitly_wait(5)
-        print(key, '-'*50)
         for i in range(1,51):
             product_description = driver.find_element('xpath', f'//*[@id="Block12Container50"]/dd[{i}]/div/h5/a').text
             price = driver.find_element('xpath', f'//*[@id="Block12Container50"]/dd[{i}]/div/ul/li/span/span').text
@@ -38,4 +41,17 @@ def Pchome():
                 # 如果找到匹配，印出括號內的內容
                 if match_inner:
                     spec = match_inner.group(1)
-                    print(name,'/',spec,'/',price)
+                    brand_list.append(name)
+                    description_list.append(spec)
+                    price_list.append(price)
+
+    driver.close()
+
+    import pandas as pd
+
+    data = pd.DataFrame({'brand': brand_list, 'spec': description_list, 'price_after': price_list})
+    data[['brand', 'model_name']] = data['brand'].str.split(' ', n=1, expand=True)
+
+    data = data[['brand', 'model_name', 'spec', 'price_after']]
+
+    return data
